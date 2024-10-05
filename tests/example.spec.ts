@@ -1,18 +1,9 @@
-import { test, expect } from '@playwright/test';
+import {test, expect} from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test.only('Check header', async ({ page }) => {
+  const expectedHeaderText = '99 Bottles of Beer';
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+  await page.goto('https://www.99-bottles-of-beer.net/lyrics.html');
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  expect(await page.locator('//h1').innerText()).toEqual(expectedHeaderText)
 });
